@@ -6,9 +6,12 @@ RUN echo "deb http://archive.debian.org/debian stretch main" > /etc/apt/sources.
 RUN apt-get update
 RUN apt-get -y upgrade
 RUN apt-get install -y libgconf2-4 libxss1 libbz2-dev wget libcurl4-gnutls-dev libpng-dev libpq-dev libedit-dev libxml2-dev libmemcached-dev libxslt-dev
-RUN apt-get -y install libasound2 libnss3 libgtk-3-0 libxtst6
-RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-RUN cat /etc/*release* && apt-get  -y install  --fix-broken ./google-chrome-stable_current_amd64.deb
+RUN apt-get -y install gnupg ca-certificates apt-transport-https libasound2 libnss3 libgtk-3-0 libxtst6
+RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
+    && echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list \
+    && apt-get update \
+    && apt-get install -y google-chrome-stable \
+    && rm -rf /var/lib/apt/lists/*
 RUN CHROME_BIN=/usr/bin/google-chrome-stable
 RUN docker-php-ext-install bz2 calendar exif gd gettext mysqli pcntl pdo_mysql pdo_pgsql pgsql shmop soap sockets sysvmsg sysvsem sysvshm wddx xsl opcache zip
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --1
