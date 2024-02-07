@@ -5,7 +5,7 @@ RUN echo "deb http://archive.debian.org/debian stretch main" > /etc/apt/sources.
           
 RUN apt-get update
 RUN apt-get -y upgrade
-RUN apt-get install -y libbz2-dev wget libcurl4-gnutls-dev libpng-dev libpq-dev libedit-dev libxml2-dev libmemcached-dev libxslt-dev
+RUN apt-get install -y libgconf2-4 libnss3-1d libxss1 libbz2-dev wget libcurl4-gnutls-dev libpng-dev libpq-dev libedit-dev libxml2-dev libmemcached-dev libxslt-dev
 RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 RUN apt-get -y install ./google-chrome-stable_current_amd64.deb
 RUN CHROME_BIN=/usr/bin/google-chrome-stable
